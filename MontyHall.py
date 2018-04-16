@@ -31,5 +31,5 @@ d=resultados[(False,0)]
 for k, v in sorted(resultados.items(), key=lambda l: (l[0][1], l[0][0])):
     print("{} al {}cambiar: {}".format("Victorias" if k[0] else "Derrotas", "no " if not k[1] else "", v))
 
-print("Porcentaje Victorias al NO haber cambiado: " +  str(d) + " / " + str(a+d) + " = " + str((d/(a+d))*100))
-print("Porcentaje Victorias al SI haber cambiado: " +  str(c) + " / " + str(b+c) + " = " + str((c/(b+c))*100))
+print("Porcentaje Victorias al NO haber cambiado: " +  str(a) + " / " + str(a+d) + " = " + str(round((float(a)/(a+d))*100, 2)))
+print("Porcentaje Victorias al SI haber cambiado: " +  str(c) + " / " + str(b+c) + " = " + str(round((float(c)/(b+c))*100, 2)))
