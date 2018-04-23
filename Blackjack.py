@@ -6,7 +6,7 @@ RONDAS = 5000000
 resultados = defaultdict(lambda: [0, 0, 0])
 cantidad = 0
 
-while (cantidad < RONDAS):
+for i in range(RONDAS):
     manos_jugador = []
     mano_jugador = 0
     mano_casa = 0
@@ -33,8 +33,7 @@ while (cantidad < RONDAS):
     posicion = resultado * (-1) + 1
     for mano in manos_jugador:
         resultados[mano][posicion] += 1
-    cantidad += 1
-    porcentaje = 100*cantidad/RONDAS
+    porcentaje = 100*(i+1)/RONDAS
     if(porcentaje.is_integer()):
         print("{}%".format(int(porcentaje)))
 for k, v in sorted(resultados.items(), key=lambda x: (x[0][0], x[0][1])):
