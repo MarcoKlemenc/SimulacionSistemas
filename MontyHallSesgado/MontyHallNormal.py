@@ -4,7 +4,7 @@ from GeneradorPuertas import GeneradorPuertas
 from GeneradorSeleccion import GeneradorSeleccion
 
 
-class MontyHallSesgado:
+class MontyHallNormal:
 
     impresora_de_resultados = None
     generador_puertas = None
@@ -16,7 +16,7 @@ class MontyHallSesgado:
         self.generador_puertas = GeneradorPuertas()
         self.generador_seleccion = GeneradorSeleccion()
 
-    def start_monty_hall_sesgado_entrenamiento(self):
+    def start_monty_hall_normal_entrenamiento(self):
         RONDAS = 10000
         print("Cantidad total de rondas: {}\n".format(RONDAS*2))
         resultados_al_no_cambiar = defaultdict(int)
@@ -24,10 +24,8 @@ class MontyHallSesgado:
 
         for i in range(RONDAS):
             puertas = self.generador_puertas.generar_aleatorio()
-            # lo de abajo pone el coche siempre la puerta 3
-            #puertas = self.generador_puertas.generar_en_la_puerta_3()
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
-            puerta_mostrada = self.generador_puertas.mostrar_puerta_con_sesgo(eleccion)
+            puerta_mostrada = self.generador_puertas.mostrar_puerta_aleatoria(eleccion)
             resultados_al_no_cambiar[puertas[eleccion] == 'COCHE'] += 1
             resultado = " "
             if(puertas[eleccion] == 'COCHE'):
@@ -39,10 +37,8 @@ class MontyHallSesgado:
 
         for i in range(RONDAS):
             puertas = self.generador_puertas.generar_aleatorio()
-            #lo de abajo pone el coche siempre la puerta 3
-            #puertas = self.generador_puertas.generar_en_la_puerta_3()
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
-            puerta_mostrada = self.generador_puertas.mostrar_puerta_con_sesgo(eleccion)
+            puerta_mostrada = self.generador_puertas.mostrar_puerta_aleatoria(eleccion)
             #selecciona aleatoriamente una puerta hasta que encuentra la que no es ni la mostrada ni la elegida en
             #un principio. Revisar
             eleccion_antigua = eleccion
@@ -85,7 +81,6 @@ class MontyHallSesgado:
         print("Probabilidad de triunfo dado: Puerta elegida = 3, Puerta mostrada = 2, Decision = Cambio : " +
               str(self.generador_seleccion.probabilidad_triunfo_puerta3_dado_puerta2_cambio))
 
-
     def start_monty_hall_competencia(self):
         RONDAS = 10000
         cantidad_triunfos = 0.0
@@ -95,12 +90,10 @@ class MontyHallSesgado:
 
         for i in range(RONDAS):
             puertas = self.generador_puertas.generar_aleatorio()
-            #el caso de abajo se pone el coche siempre en la puerta 3
-            #puertas = self.generador_puertas.generar_en_la_puerta_3()
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
-            puerta_mostrada = self.generador_puertas.mostrar_puerta_con_sesgo(eleccion)
+            puerta_mostrada = self.generador_puertas.mostrar_puerta_aleatoria(eleccion)
             eleccion_final = self.generador_seleccion.generar_seleccion_probabilistica(eleccion, puerta_mostrada)
-            if(puertas[eleccion_final] == 'COCHE'):
+            if (puertas[eleccion_final] == 'COCHE'):
                 cantidad_triunfos += 1
             else:
                 cantidad_derrotas += 1
@@ -108,3 +101,5 @@ class MontyHallSesgado:
 
         porcentaje_victorias = cantidad_triunfos / (cantidad_triunfos + cantidad_derrotas)
         print ("\n Porcentaje de victorias: " + str(porcentaje_victorias))
+
+
