@@ -2,9 +2,34 @@ import numpy as np
 import pylab as plt
 
 # map cell to cell, add circular cell to goal point
-points_list = [(0,1), (1,5), (5,6), (5,4), (1,2), (2,3), (2,7)]
+#points_list = [(0,1), (0,2), (0,3), (1,4), (1,5), (4,10), (4,11), (5,12), (5,13), (2,6), (2,7), (3,8), (3,9)]
+#points_list = [(0,1), (0,2), (0,3), (1,4), (1,5), (4,9), (4,10), (5,9), (5,11), (2,6), (2,7), (6,9), (6,12),(7,9), (7,13), (3,9), (3,8)]
 
-goal = 7
+p1 = 1
+p2 = 2
+p3 = 3
+auto = 9
+cabra1 = 10
+cabra2 = 11
+
+#points_list = [(0,'p1'), (0,'p2'), (0,'p3'), ('p1',4), ('p1',5), (4,9), (4,10), (5,9), (5,11), ('p2',6),
+#               ('p2',7), (6,9), (6,12),(7,9), (7,13), ('p3',9), ('p3',8)]
+
+#points_list = [(0,p1), (0,p2), (0,p3), (p1,4), (p1,5), (4,9), (4,10), (5,9), (5,11), (p2,6),
+#               (p2,7), (6,9), (6,12),(7,9), (7,13), (p3,9), (p3,8)]
+
+#version ZZZ
+##points_list = [(0,p1), (0,p2), (0,p3),
+##               (p1,4), (4,auto), (4,10), (p1,5),(5,auto), (5,11),
+##               (p2,6), (6,auto), (6,12), (p2,7) ,(7,auto), (7,13),
+##               (p3,auto), (p3,8)]
+
+points_list = [(0,p1), (0,p2), (0,p3),
+               (p1,4), (4,auto), (4,cabra1), (p1,5),(5,auto), (5,cabra2),
+               (p2,6), (6,auto), (6,cabra1), (p2,7) ,(7,auto), (7,cabra2),
+               (p3,auto), (p3,8)]
+
+goal = auto
 
 import networkx as nx
 G=nx.Graph()
@@ -15,8 +40,22 @@ nx.draw_networkx_edges(G,pos)
 nx.draw_networkx_labels(G,pos)
 plt.show()
 
+points_list2 = [(0,'p1'), (0,'p2'), (0,'p3'),
+               ('p1',4), (4,'auto'), (4,'cabra1'), ('p1',5),(5,'auto'), (5,'cabra2'),
+               ('p2',6), (6,'auto'), (6,'cabra1'), ('p2',7) ,(7,'auto'), (7,'cabra2'),
+               ('p3','auto'), ('p3',8)]
+
+import networkx as nx2
+G2=nx2.Graph()
+G2.add_edges_from(points_list2)
+pos2 = nx.spring_layout(G2)
+nx2.draw_networkx_nodes(G2,pos2)
+nx2.draw_networkx_edges(G2,pos2)
+nx2.draw_networkx_labels(G2,pos2)
+plt.show()
+
 # how many points in graph? x points
-MATRIX_SIZE = 8
+MATRIX_SIZE = 12 #14 con version ZZZ
 
 # create matrix x*y
 R = np.matrix(np.ones(shape=(MATRIX_SIZE, MATRIX_SIZE)))
@@ -92,7 +131,7 @@ update(initial_state, action, gamma)
 
 # Training
 scores = []
-for i in range(70):
+for i in range(300):
     current_state = np.random.randint(0, int(Q.shape[0]))
     available_act = available_actions(current_state)
     action = sample_next_action(available_act)
@@ -107,7 +146,7 @@ print(Q/np.max(Q)*100)
 current_state = 0
 steps = [current_state]
 
-while current_state != 7:
+while current_state != goal:
 
     next_step_index = np.where(Q[current_state,] == np.max(Q[current_state,]))[1]
     
@@ -126,4 +165,4 @@ plt.plot(scores)
 plt.show()
 
 #Most efficient path:
-#[0, 1, 2, 7]
+#[0, 3, 9]
