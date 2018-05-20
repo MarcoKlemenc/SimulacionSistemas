@@ -1,5 +1,5 @@
-from MontyHallSesgado import MontyHallSesgado
+from MontyHall import MontyHall
 
-montyHallSesgado = MontyHallSesgado()
-montyHallSesgado.start_monty_hall_sesgado_entrenamiento()
-montyHallSesgado.start_monty_hall_competencia()
+montyHallSesgado = MontyHall('sesgado')
+montyHallSesgado.iniciar_entrenamiento()
+montyHallSesgado.iniciar_competencia()

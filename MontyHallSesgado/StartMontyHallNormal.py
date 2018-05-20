@@ -1,5 +1,5 @@
-from MontyHallNormal import MontyHallNormal
+from MontyHall import MontyHall
 
-montyHallNormal = MontyHallNormal()
-montyHallNormal.start_monty_hall_normal_entrenamiento()
-montyHallNormal.start_monty_hall_competencia()
+montyHallNormal = MontyHall('normal')
+montyHallNormal.iniciar_entrenamiento()
+montyHallNormal.iniciar_competencia()
