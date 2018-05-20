@@ -23,7 +23,7 @@ class MontyHallNormal:
         resultados_al_cambiar = defaultdict(int)
 
         for i in range(RONDAS):
-            puertas = self.generador_puertas.generar_aleatorio()
+            puertas = self.generador_puertas.generar_coche()
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
             puerta_mostrada = self.generador_puertas.mostrar_puerta_aleatoria(eleccion)
             resultados_al_no_cambiar[puertas[eleccion] == 'COCHE'] += 1
@@ -36,7 +36,7 @@ class MontyHallNormal:
             self.generador_puertas.reiniciar_puertas()
 
         for i in range(RONDAS):
-            puertas = self.generador_puertas.generar_aleatorio()
+            puertas = self.generador_puertas.generar_coche()
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
             puerta_mostrada = self.generador_puertas.mostrar_puerta_aleatoria(eleccion)
             #selecciona aleatoriamente una puerta hasta que encuentra la que no es ni la mostrada ni la elegida en
@@ -89,7 +89,7 @@ class MontyHallNormal:
         print("\n\nCantidad total de rondas: " + str(RONDAS) + " \n")
 
         for i in range(RONDAS):
-            puertas = self.generador_puertas.generar_aleatorio()
+            puertas = self.generador_puertas.generar_coche()
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
             puerta_mostrada = self.generador_puertas.mostrar_puerta_aleatoria(eleccion)
             eleccion_final = self.generador_seleccion.generar_seleccion_probabilistica(eleccion, puerta_mostrada)

@@ -23,9 +23,9 @@ class MontyHallSesgado:
         resultados_al_cambiar = defaultdict(int)
 
         for i in range(RONDAS):
-            puertas = self.generador_puertas.generar_aleatorio()
+            puertas = self.generador_puertas.generar_coche()
             # lo de abajo pone el coche siempre la puerta 3
-            #puertas = self.generador_puertas.generar_en_la_puerta_3()
+            #puertas = self.generador_puertas.generar_coche(2)
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
             puerta_mostrada = self.generador_puertas.mostrar_puerta_con_sesgo(eleccion)
             resultados_al_no_cambiar[puertas[eleccion] == 'COCHE'] += 1
@@ -38,9 +38,9 @@ class MontyHallSesgado:
             self.generador_puertas.reiniciar_puertas()
 
         for i in range(RONDAS):
-            puertas = self.generador_puertas.generar_aleatorio()
+            puertas = self.generador_puertas.generar_coche()
             #lo de abajo pone el coche siempre la puerta 3
-            #puertas = self.generador_puertas.generar_en_la_puerta_3()
+            #puertas = self.generador_puertas.generar_coche(2)
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
             puerta_mostrada = self.generador_puertas.mostrar_puerta_con_sesgo(eleccion)
             #selecciona aleatoriamente una puerta hasta que encuentra la que no es ni la mostrada ni la elegida en
@@ -94,9 +94,9 @@ class MontyHallSesgado:
         print("\n\nCantidad total de rondas: " + str(RONDAS) + " \n")
 
         for i in range(RONDAS):
-            puertas = self.generador_puertas.generar_aleatorio()
+            puertas = self.generador_puertas.generar_coche()
             #el caso de abajo se pone el coche siempre en la puerta 3
-            #puertas = self.generador_puertas.generar_en_la_puerta_3()
+            #puertas = self.generador_puertas.generar_coche(2)
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
             puerta_mostrada = self.generador_puertas.mostrar_puerta_con_sesgo(eleccion)
             eleccion_final = self.generador_seleccion.generar_seleccion_probabilistica(eleccion, puerta_mostrada)

@@ -8,15 +8,8 @@ class GeneradorPuertas:
     def __init__(self):
         self.puertas = ['CABRA', 'CABRA', 'CABRA']
 
-    def generar_aleatorio(self):
-        posicion_coche = randint(0, 2)
-        self.puertas[posicion_coche] = 'COCHE'
-        return self.puertas
-
-
-    def generar_en_la_puerta_3(self):
-        posicion_coche = 2
-        self.puertas[posicion_coche] = 'COCHE'
+    def generar_coche(self, posicion_coche=False):
+        self.puertas[posicion_coche or randint(0, 2)] = 'COCHE'
         return self.puertas
 
     def mostrar_puerta_aleatoria(self, eleccion):
