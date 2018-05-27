@@ -35,7 +35,6 @@ class MontyHall:
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
             puerta_mostrada = self.generador_puertas.mostrar_puerta(eleccion)
             resultados_al_no_cambiar[puertas[eleccion] == 'COCHE'] += 1
-            resultado = " "
             if(puertas[eleccion] == 'COCHE'):
                 resultado = "triunfo"
             else:
@@ -63,40 +62,20 @@ class MontyHall:
             self.generador_seleccion.computar_resultado(eleccion_antigua, eleccion, puerta_mostrada, resultado)
             self.generador_puertas.reiniciar_puertas()
 
-        self.generador_seleccion.generar_probabilidades()
+        self.generador_seleccion.actualizar_probabilidades()
         self.impresora_de_resultados.imprimir(resultados_al_no_cambiar, resultados_al_cambiar)
 
-        print("Probabilidad de triunfo dado: Puerta elegida = 1, Puerta mostrada = 2, Decision = Quedarse : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta1_dado_puerta2))
-        print("Probabilidad de triunfo dado: Puerta elegida = 1, Puerta mostrada = 2, Decision = Cambio : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta1_dado_puerta2_cambio))
-        print("Probabilidad de triunfo dado: Puerta elegida = 1, Puerta mostrada = 3, Decision = Quedarse : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta1_dado_puerta3))
-        print("Probabilidad de triunfo dado: Puerta elegida = 1, Puerta mostrada = 3, Decision = Cambio : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta1_dado_puerta3_cambio))
-        print("Probabilidad de triunfo dado: Puerta elegida = 2, Puerta mostrada = 1, Decision = Quedarse : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta2_dado_puerta1))
-        print("Probabilidad de triunfo dado: Puerta elegida = 2, Puerta mostrada = 1, Decision = Cambio : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta2_dado_puerta1_cambio))
-        print("Probabilidad de triunfo dado: Puerta elegida = 2, Puerta mostrada = 3, Decision = Quedarse : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta2_dado_puerta3))
-        print("Probabilidad de triunfo dado: Puerta elegida = 2, Puerta mostrada = 3, Decision = Cambio : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta2_dado_puerta3_cambio))
-        print("Probabilidad de triunfo dado: Puerta elegida = 3, Puerta mostrada = 1, Decision = Quedarse : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta3_dado_puerta1))
-        print("Probabilidad de triunfo dado: Puerta elegida = 3, Puerta mostrada = 1, Decision = Cambio : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta3_dado_puerta1_cambio))
-        print("Probabilidad de triunfo dado: Puerta elegida = 3, Puerta mostrada = 2, Decision = Quedarse : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta3_dado_puerta2))
-        print("Probabilidad de triunfo dado: Puerta elegida = 3, Puerta mostrada = 2, Decision = Cambio : " +
-              str(self.generador_seleccion.probabilidad_triunfo_puerta3_dado_puerta2_cambio))
+        for tup, prob in sorted(self.generador_seleccion.probabilidades.items(), key=lambda l: (l[0][0], l[0][1], l[0][2])):
+            print("Probabilidad de triunfo al elegir la puerta {}, mostrarse la puerta {} y {}: {}".format(
+                tup[0]+1, tup[1]+1, "cambiar" if tup[2] else "quedarse", "{0:.04f}".format(prob)
+            ))
 
     def iniciar_competencia(self):
         RONDAS = 10000
         cantidad_triunfos = 0.0
         cantidad_derrotas = 0.0
 
-        print("\n\nCantidad total de rondas: " + str(RONDAS) + " \n")
+        print("\nCantidad total de rondas: {}".format(RONDAS))
 
         for i in range(RONDAS):
             puertas = self.generador_puertas.generar_coche()
@@ -112,4 +91,4 @@ class MontyHall:
             self.generador_puertas.reiniciar_puertas()
 
         porcentaje_victorias = cantidad_triunfos / (cantidad_triunfos + cantidad_derrotas)
-        print ("\n Porcentaje de victorias: " + str(porcentaje_victorias))
+        print ("\nPorcentaje de victorias: " + str(porcentaje_victorias))
