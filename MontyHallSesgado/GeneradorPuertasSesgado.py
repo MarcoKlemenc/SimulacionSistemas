@@ -14,55 +14,36 @@ class GeneradorPuertasSesgado:
 
     """
     Casos:
-    *Seleccion = 1
-        -Puerta ganadora = 1 --> Puerta mostrada = 3
-        -Puerta ganadora = 2 --> Puerta mostrada = 3
-        -Puerta ganadora = 3 --> Puerta mostrada = 2
-    *Seleccion = 2
-        -Puerta ganadora = 1 --> Puerta mostrada = 3
-        -Puerta ganadora = 2 --> Puerta mostrada = 3
-        -Puerta ganadora = 3 --> Puerta mostrada = 1
-    *Seleccion = 3
-        -Puerta ganadora = 1 --> Puerta mostrada = 2
-        -Puerta ganadora = 2 --> Puerta mostrada = 1
-        -Puerta ganadora = 3 --> Puerta mostrada = 1
+    Seleccion   Ganadora    Mostrada
+    1           1           3
+    1           2           3
+    1           3           2
+    2           1           3
+    2           2           3
+    2           3           1
+    3           1           2
+    3           2           1
+    3           3           1
     """
     def mostrar_puerta(self, eleccion):
         puerta_ganadora = self.get_puerta_ganadora()
-        puerta_a_mostrar = -1
+        eleccion_y_ganadora = [eleccion, puerta_ganadora]
+        eleccion_y_ganadora.sort()
 
-        if(eleccion == 0):
-            if(puerta_ganadora == 0):
-                puerta_a_mostrar = 2
-            elif(puerta_ganadora == 1):
-                puerta_a_mostrar = 2
-            elif(puerta_ganadora == 2):
-                puerta_a_mostrar = 1
+        if eleccion_y_ganadora in [[1, 2], [2, 2]]:
+            return 0
+        elif eleccion_y_ganadora == [0, 2]:
+            return 1
+        elif eleccion_y_ganadora in [[0, 0], [0, 1], [1, 1]]:
+            return 2
 
-        if (eleccion == 1):
-            if (puerta_ganadora == 0):
-                puerta_a_mostrar = 2
-            elif (puerta_ganadora == 1):
-                puerta_a_mostrar = 2
-            elif (puerta_ganadora == 2):
-                puerta_a_mostrar = 0
-
-        if (eleccion == 2):
-            if (puerta_ganadora == 0):
-                puerta_a_mostrar = 1
-            elif (puerta_ganadora == 1):
-                puerta_a_mostrar = 0
-            elif (puerta_ganadora == 2):
-                puerta_a_mostrar = 0
-
-        return puerta_a_mostrar
+        return -1
 
     def reiniciar_puertas(self):
         self.puertas = ['CABRA', 'CABRA', 'CABRA']
 
     def get_puerta_ganadora(self):
-        posicion = -1
         for x in range(0, 3):
             if self.puertas[x] == 'COCHE':
-                posicion = x
-        return posicion
+                return x
+        return -1

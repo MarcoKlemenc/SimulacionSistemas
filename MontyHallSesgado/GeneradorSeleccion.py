@@ -96,7 +96,6 @@ class GeneradorSeleccion:
 
     #habria que buscar un patron para esto. Va a ser una cosa fea de ifs. Despues lo hacemos
     def generar_seleccion_probabilistica(self, eleccion, puerta_mostrada):
-
         if(eleccion == 0):
             if(puerta_mostrada == 1):
                 if(self.probabilidad_triunfo_puerta1_dado_puerta2 >= self.probabilidad_triunfo_puerta1_dado_puerta2_cambio):
@@ -132,7 +131,7 @@ class GeneradorSeleccion:
                     return 2
                 else:
                     return 0
-
+        return self.generar_seleccion_aleatoria()
 
     def computar_resultado(self, eleccion_inicial, eleccion_final, puerta_mostrada, resultado):
         if (eleccion_inicial == 0):
