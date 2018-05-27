@@ -3,6 +3,7 @@ from ImpresoraDeResultados import ImpresoraDeResultados
 from GeneradorPuertas import GeneradorPuertas
 from GeneradorPuertasSesgado import GeneradorPuertasSesgado
 from GeneradorPuertasRepetido import GeneradorPuertasRepetido
+from GeneradorPuertasPatron import GeneradorPuertasPatron
 from GeneradorSeleccion import GeneradorSeleccion
 
 
@@ -26,6 +27,8 @@ class MontyHall:
             return GeneradorPuertasSesgado()
         elif tipo == 'repetido':
             return GeneradorPuertasRepetido()
+        elif tipo == 'patron':
+            return GeneradorPuertasPatron()
     
     def practicar_rondas(self, cantidad, cambiar):
         for i in range(cantidad):
