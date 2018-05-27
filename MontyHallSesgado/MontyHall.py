@@ -2,6 +2,7 @@ from collections import defaultdict
 from ImpresoraDeResultados import ImpresoraDeResultados
 from GeneradorPuertas import GeneradorPuertas
 from GeneradorPuertasSesgado import GeneradorPuertasSesgado
+from GeneradorPuertasRepetido import GeneradorPuertasRepetido
 from GeneradorSeleccion import GeneradorSeleccion
 
 
@@ -15,34 +16,19 @@ class MontyHall:
         self.impresora_de_resultados = ImpresoraDeResultados()
         self.generador_puertas = self.obtener_generador_puertas(tipo_generador_puertas)
         self.generador_seleccion = GeneradorSeleccion()
+        self.resultados_al_no_cambiar = defaultdict(int)
+        self.resultados_al_cambiar = defaultdict(int)
     
     def obtener_generador_puertas(self, tipo):
         if tipo == 'normal':
             return GeneradorPuertas()
         elif tipo == 'sesgado':
             return GeneradorPuertasSesgado()
-
-    def iniciar_entrenamiento(self):
-        RONDAS = 10000
-        print("Cantidad total de rondas: {}\n".format(RONDAS*2))
-        resultados_al_no_cambiar = defaultdict(int)
-        resultados_al_cambiar = defaultdict(int)
-
-        for i in range(RONDAS):
-            puertas = self.generador_puertas.generar_coche()
-            # lo de abajo pone el coche siempre la puerta 3
-            #puertas = self.generador_puertas.generar_coche(2)
-            eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
-            puerta_mostrada = self.generador_puertas.mostrar_puerta(eleccion)
-            resultados_al_no_cambiar[puertas[eleccion] == 'COCHE'] += 1
-            if(puertas[eleccion] == 'COCHE'):
-                resultado = "triunfo"
-            else:
-                resultado = "derrota"
-            self.generador_seleccion.computar_resultado(eleccion, eleccion, puerta_mostrada, resultado)
-            self.generador_puertas.reiniciar_puertas()
-
-        for i in range(RONDAS):
+        elif tipo == 'repetido':
+            return GeneradorPuertasRepetido()
+    
+    def practicar_rondas(self, cantidad, cambiar):
+        for i in range(cantidad):
             puertas = self.generador_puertas.generar_coche()
             #lo de abajo pone el coche siempre la puerta 3
             #puertas = self.generador_puertas.generar_coche(2)
@@ -51,10 +37,13 @@ class MontyHall:
             #selecciona aleatoriamente una puerta hasta que encuentra la que no es ni la mostrada ni la elegida en
             #un principio. Revisar
             eleccion_antigua = eleccion
-            while eleccion == eleccion_antigua or eleccion == puerta_mostrada:
-                eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
-            #fin de le seleccion de la puerta por la que cambio
-            resultados_al_cambiar[puertas[eleccion] == 'COCHE'] += 1
+            if not cambiar:
+                self.resultados_al_no_cambiar[puertas[eleccion] == 'COCHE'] += 1
+            else:
+                while eleccion == eleccion_antigua or eleccion == puerta_mostrada:
+                    eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
+                #fin de le seleccion de la puerta por la que cambio
+                self.resultados_al_cambiar[puertas[eleccion] == 'COCHE'] += 1
             if (puertas[eleccion] == 'COCHE'):
                 resultado = "triunfo"
             else:
@@ -62,8 +51,15 @@ class MontyHall:
             self.generador_seleccion.computar_resultado(eleccion_antigua, eleccion, puerta_mostrada, resultado)
             self.generador_puertas.reiniciar_puertas()
 
+    def iniciar_entrenamiento(self):
+        RONDAS = 10000
+        print("Cantidad total de rondas: {}\n".format(RONDAS*2))
+
+        self.practicar_rondas(10000, False)
+        self.practicar_rondas(10000, True)
+
         self.generador_seleccion.actualizar_probabilidades()
-        self.impresora_de_resultados.imprimir(resultados_al_no_cambiar, resultados_al_cambiar)
+        self.impresora_de_resultados.imprimir(self.resultados_al_no_cambiar, self.resultados_al_cambiar)
 
         for tup, prob in sorted(self.generador_seleccion.probabilidades.items(), key=lambda l: (l[0][0], l[0][1], l[0][2])):
             print("Probabilidad de triunfo al elegir la puerta {}, mostrarse la puerta {} y {}: {}".format(

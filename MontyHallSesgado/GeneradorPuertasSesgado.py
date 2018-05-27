@@ -8,8 +8,8 @@ class GeneradorPuertasSesgado:
     def __init__(self):
         self.puertas = ['CABRA', 'CABRA', 'CABRA']
 
-    def generar_coche(self, posicion_coche=False):
-        self.puertas[posicion_coche or randint(0, 2)] = 'COCHE'
+    def generar_coche(self):
+        self.puertas[randint(0, 2)] = 'COCHE'
         return self.puertas
 
     """

@@ -1,7 +1,7 @@
 from random import randint
 
 
-class GeneradorPuertas:
+class GeneradorPuertasRepetido:
 
     puertas = None
 
@@ -9,21 +9,24 @@ class GeneradorPuertas:
         self.puertas = ['CABRA', 'CABRA', 'CABRA']
 
     def generar_coche(self):
-        self.puertas[randint(0, 2)] = 'COCHE'
+        self.puertas[2] = 'COCHE'
         return self.puertas
 
     def mostrar_puerta(self, eleccion):
-        puerta_a_mostrar = randint(0, 2)
-        while(self.puertas[puerta_a_mostrar] == 'COCHE' or puerta_a_mostrar == eleccion):
-            puerta_a_mostrar = randint(0, 2)
-        return puerta_a_mostrar
+        if eleccion == 0:
+            return 1
+        elif eleccion == 1:
+            return 0
+        elif eleccion == 2:
+            return randint(0, 1)
+
+        return -1
 
     def reiniciar_puertas(self):
         self.puertas = ['CABRA', 'CABRA', 'CABRA']
 
     def get_puerta_ganadora(self):
-        posicion = -1
         for x in range(0, 3):
             if self.puertas[x] == 'COCHE':
-                posicion = x
-        return posicion
+                return x
+        return -1
