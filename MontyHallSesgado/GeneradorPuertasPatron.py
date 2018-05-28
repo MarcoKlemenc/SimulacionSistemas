@@ -27,7 +27,4 @@ class GeneradorPuertasPatron:
         self.puertas = ['CABRA', 'CABRA', 'CABRA']
 
     def get_puerta_ganadora(self):
-        for x in range(0, 3):
-            if self.puertas[x] == 'COCHE':
-                return x
-        return -1
+        return self.puertas.index('COCHE')

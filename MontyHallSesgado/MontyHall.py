@@ -33,8 +33,6 @@ class MontyHall:
     def practicar_rondas(self, cantidad, cambiar):
         for i in range(cantidad):
             puertas = self.generador_puertas.generar_coche()
-            #lo de abajo pone el coche siempre la puerta 3
-            #puertas = self.generador_puertas.generar_coche(2)
             eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
             puerta_mostrada = self.generador_puertas.mostrar_puerta(eleccion)
             #selecciona aleatoriamente una puerta hasta que encuentra la que no es ni la mostrada ni la elegida en
@@ -71,23 +69,27 @@ class MontyHall:
 
     def iniciar_competencia(self):
         RONDAS = 10000
-        cantidad_triunfos = 0.0
-        cantidad_derrotas = 0.0
+        cantidad_triunfos = 0
+        cantidad_derrotas = 0
+        seleccion_inicial = -1
 
         print("\nCantidad total de rondas: {}".format(RONDAS))
 
-        for i in range(RONDAS):
-            puertas = self.generador_puertas.generar_coche()
-            #el caso de abajo se pone el coche siempre en la puerta 3
-            #puertas = self.generador_puertas.generar_coche(2)
-            eleccion = self.generador_seleccion.generar_seleccion_aleatoria()
-            puerta_mostrada = self.generador_puertas.mostrar_puerta(eleccion)
-            eleccion_final = self.generador_seleccion.generar_seleccion_probabilistica(eleccion, puerta_mostrada)
-            if(puertas[eleccion_final] == 'COCHE'):
-                cantidad_triunfos += 1
-            else:
-                cantidad_derrotas += 1
-            self.generador_puertas.reiniciar_puertas()
-
+        for h in range(1):
+            coches_por_puerta = [0, 0, 0]
+            for i in range(10000):
+                puertas = self.generador_puertas.generar_coche()
+                eleccion = self.generador_seleccion.generar_seleccion_aleatoria() if seleccion_inicial == -1 else seleccion_inicial
+                puerta_mostrada = self.generador_puertas.mostrar_puerta(eleccion)
+                eleccion_final = self.generador_seleccion.generar_seleccion_probabilistica(eleccion, puerta_mostrada) if seleccion_inicial == -1 else seleccion_inicial
+                if(puertas[eleccion_final] == 'COCHE'):
+                    cantidad_triunfos += 1
+                else:
+                    cantidad_derrotas += 1
+                coches_por_puerta[puertas.index('COCHE')] += 1
+                self.generador_puertas.reiniciar_puertas()
+                seleccion_inicial = -1
+            seleccion_inicial = coches_por_puerta.index(max(coches_por_puerta))
+        
         porcentaje_victorias = cantidad_triunfos / (cantidad_triunfos + cantidad_derrotas)
         print ("\nPorcentaje de victorias: " + str(porcentaje_victorias))

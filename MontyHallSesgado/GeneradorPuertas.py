@@ -22,8 +22,4 @@ class GeneradorPuertas:
         self.puertas = ['CABRA', 'CABRA', 'CABRA']
 
     def get_puerta_ganadora(self):
-        posicion = -1
-        for x in range(0, 3):
-            if self.puertas[x] == 'COCHE':
-                posicion = x
-        return posicion
+        return self.puertas.index('COCHE')
