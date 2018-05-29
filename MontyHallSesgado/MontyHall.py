@@ -1,6 +1,6 @@
 from collections import defaultdict
 from ImpresoraDeResultados import ImpresoraDeResultados
-from GeneradorPuertas import GeneradorPuertas
+from GeneradorPuertasAleatoria import GeneradorPuertasAleatoria
 from GeneradorPuertasSesgado import GeneradorPuertasSesgado
 from GeneradorPuertasRepetido import GeneradorPuertasRepetido
 from GeneradorPuertasPatron import GeneradorPuertasPatron
@@ -22,7 +22,7 @@ class MontyHall:
     
     def obtener_generador_puertas(self, tipo):
         if tipo == 'normal':
-            return GeneradorPuertas()
+            return GeneradorPuertasAleatoria()
         elif tipo == 'sesgado':
             return GeneradorPuertasSesgado()
         elif tipo == 'repetido':

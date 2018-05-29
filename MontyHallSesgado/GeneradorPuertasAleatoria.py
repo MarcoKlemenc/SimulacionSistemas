@@ -1,7 +1,7 @@
 from random import randint
 
 
-class GeneradorPuertas:
+class GeneradorPuertasAleatoria:
 
     puertas = None
 
