@@ -58,11 +58,7 @@ class MontyHall:
         self.generador_seleccion.encontrar_patron()
 
         self.impresora_de_resultados.imprimir(self.resultados_al_no_cambiar, self.resultados_al_cambiar)
-        for tup, prob in sorted(self.generador_seleccion.probabilidades.items(), key=lambda l: (l[0][0], l[0][1], l[0][2])):
-            print("Probabilidad de triunfo al elegir la puerta {}, mostrarse la puerta {} y {}: {}".format(
-                tup[0]+1, tup[1]+1, "cambiar" if tup[2] else "quedarse", "{0:.04f}".format(prob)
-            ))
-        print()
+        self.impresora_de_resultados.imprimir_entrenamiento(self.generador_seleccion)
 
     def iniciar_competencia(self):
         cantidad_triunfos = 0

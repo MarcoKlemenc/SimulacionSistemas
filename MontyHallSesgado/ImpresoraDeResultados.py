@@ -13,6 +13,13 @@ class ImpresoraDeResultados:
             print("{} al cambiar: {} ({}%)".format("Triunfos" if k else "Derrotas", v, porcentaje))
         print()
     
+    def imprimir_entrenamiento(self, generador):
+        for tup, prob in sorted(generador.probabilidades.items(), key=lambda l: (l[0][0], l[0][1], l[0][2])):
+            print("Triunfos al elegir la puerta {}, mostrarse la puerta {} y {}: {} ({}%)".format(
+                tup[0]+1, tup[1]+1, "cambiar" if tup[2] else "quedarse", generador.triunfos.get(tup) or "0", "{0:.02f}".format(100*prob)
+            ))
+        print()
+    
     def imprimir_competencia(self, triunfos, derrotas):
         porcentaje = '{0:.02f}'.format(100 * triunfos / (triunfos + derrotas))
         print ("Triunfos: {} ({}%)".format(triunfos, porcentaje))
