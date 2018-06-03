@@ -28,7 +28,6 @@ class GeneradorSeleccion:
             self.contador += 1
             if self.contador == len(self.patron):
                 self.contador = 0
-            print (seleccion)
             return seleccion
         return -1
 
