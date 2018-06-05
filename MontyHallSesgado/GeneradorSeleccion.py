@@ -37,7 +37,7 @@ class GeneradorSeleccion:
     def actualizar_probabilidades(self):
         for tup in set(self.triunfos).union(set(self.derrotas)):
             if self.triunfos.get(tup) and self.derrotas.get(tup):
-                self.probabilidades[tup] = self.triunfos[tup] / (self.triunfos[tup] + self.derrotas[tup])
+                self.probabilidades[tup] = float(self.triunfos[tup]) / (self.triunfos[tup] + self.derrotas[tup])
             elif not self.triunfos.get(tup):
                 self.probabilidades[tup] = 0
             else:

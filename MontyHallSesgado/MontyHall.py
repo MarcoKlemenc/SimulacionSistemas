@@ -65,13 +65,14 @@ class MontyHall:
         cantidad_derrotas = 0
         seleccion_inicial = -1
 
+
         for h in range(1):
             coches_por_puerta = [0, 0, 0]
             for i in range(self.cantidad_competencia):
                 eleccion_patron = self.generador_seleccion.generar_seleccion_por_patron()
                 puertas = self.generador_final.generar_coche()
                 if eleccion_patron == -1:
-                    eleccion = self.generador_seleccion.generar_seleccion_aleatoria() if seleccion_inicial == -1 else seleccion_inicial
+                    eleccion = self.generador_seleccion.generar_seleccion_aleatoria() #if seleccion_inicial == -1 else seleccion_inicial
                 else:
                     eleccion = eleccion_patron
                 puerta_mostrada = self.generador_final.mostrar_puerta(eleccion)
@@ -86,6 +87,7 @@ class MontyHall:
                 coches_por_puerta[puertas.index('COCHE')] += 1
                 self.generador_final.reiniciar_puertas()
                 seleccion_inicial = -1
-            seleccion_inicial = coches_por_puerta.index(max(coches_por_puerta))
+
+            #seleccion_inicial = coches_por_puerta.index(max(coches_por_puerta))
         
         self.impresora_de_resultados.imprimir_competencia(cantidad_triunfos, cantidad_derrotas)
